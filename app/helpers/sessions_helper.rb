@@ -21,10 +21,6 @@ module SessionsHelper
     current_user = nil
   end
 
-  def deny_access
-    redirect_to signin_path, :notice => "Please sign in to access this page."
-  end
-
   def current_user?(user)
     user == current_user
   end
@@ -37,6 +33,11 @@ module SessionsHelper
   def redirect_back_or(default)
     redirect_to(session[:return_to] || default)
     clear_return_to
+  end
+
+  def dont_delete_yourself
+    flash[:error] = "You cannot delete yourself."
+    redirect_to(users_path)
   end
 
   private
